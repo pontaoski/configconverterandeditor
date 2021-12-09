@@ -1,0 +1,762 @@
+{
+    "points-for-winning": 16,
+    "points-for-losing": 4,
+    "points-for-drawing": 8,
+    "event-frequency-ticks": 600,
+    "tiki-shrine-attack-radius-tiles": 20,
+    "tiki-shrine-attack-damage": 22,
+    "tiki-shrine-attack-speed-ticks": 18,
+    "tiki-shrine-self-heal-speed-ticks": 4,
+    "tiki-shrine-max-hp": 550,
+    "hp-as-mana-cost": 20,
+    "tiki-heal-radius-tiles": 14,
+    "tiki-heal-speed-ticks": 6,
+    "tree-platform-convert-radius-tiles": 4.5,
+    "classes": [
+        {
+            "name": "Archer",
+            "inventory": "ctgclass0",
+            "ability-cooldown-seconds": 35,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                36
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "TemporaryReforge",
+                            "item-id": 265,
+                            "prefix": 18,
+                            "duration": "00:00:08"
+                        },
+                        {
+                            "$type": "BuffSelf",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 16,
+                                        "buff-duration": 480
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Ninja",
+            "inventory": "ctgclass1",
+            "ability-cooldown-seconds": 20,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                6,
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "BuffSelf",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 10,
+                                        "buff-duration": 3600
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Beast",
+            "inventory": "ctgclass2",
+            "ability-cooldown-seconds": 35,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "SpawnNPC",
+                            "npc-id": 141
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Gladiator",
+            "inventory": "ctgclass3",
+            "ability-cooldown-seconds": 35,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                33,
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "TemporaryItem",
+                            "item-id": 4788,
+                            "prefix": 50,
+                            "duration": "00:00:08",
+                            "is-accessory": false
+                        },
+                        {
+                            "$type": "BuffSelf",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 3,
+                                        "buff-duration": 480
+                                    },
+                                    {
+                                        "buff-id": 146,
+                                        "buff-duration": 480
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Tank",
+            "inventory": "ctgclass4",
+            "ability-cooldown-seconds": 40,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                46,
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "BuffSelf",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 5,
+                                        "buff-duration": 600
+                                    },
+                                    {
+                                        "buff-id": 113,
+                                        "buff-duration": 600
+                                    },
+                                    {
+                                        "buff-id": 114,
+                                        "buff-duration": 600
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Jungle Man",
+            "inventory": "ctgclass5",
+            "ability-cooldown-seconds": 35,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                33,
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "TemporaryItem",
+                            "item-id": 3296,
+                            "prefix": 0,
+                            "duration": "00:00:07.5000000",
+                            "is-accessory": true
+                        },
+                        {
+                            "$type": "BuffPlayersInRadius",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 163,
+                                        "buff-duration": 300
+                                    },
+                                    {
+                                        "buff-id": 20,
+                                        "buff-duration": 300
+                                    }
+                                ]
+                            },
+                            "target-finder": {
+                                "target-types": "enemies",
+                                "radius": 20
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Black Mage",
+            "inventory": "ctgclass6",
+            "ability-cooldown-seconds": 20,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                6,
+                36
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "BuffSelf",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 7,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 26,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 29,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 6,
+                                        "buff-duration": 240
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Psychic",
+            "inventory": "ctgclass7",
+            "ability-cooldown-seconds": 30,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                33
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "StartUsingHPAsMana"
+                        },
+                        {
+                            "$type": "BuffSelf",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 7,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 26,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 29,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 6,
+                                        "buff-duration": 240
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "White Mage",
+            "inventory": "ctgclass8",
+            "ability-cooldown-seconds": 30,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "IntervalElapsed",
+                            "interval": 6
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "BuffPlayersInRadius",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 46,
+                                        "buff-duration": 120
+                                    }
+                                ]
+                            },
+                            "target-finder": {
+                                "target-types": "enemies",
+                                "radius": 4
+                            }
+                        }
+                    ]
+                },
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "BuffPlayersInRadius",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 5,
+                                        "buff-duration": 360
+                                    },
+                                    {
+                                        "buff-id": 206,
+                                        "buff-duration": 480
+                                    },
+                                    {
+                                        "buff-id": 2,
+                                        "buff-duration": 480
+                                    },
+                                    {
+                                        "buff-id": 215,
+                                        "buff-duration": 480
+                                    }
+                                ]
+                            },
+                            "target-finder": {
+                                "target-types": "allies",
+                                "radius": 25
+                            },
+                            "messenger": {
+                                "color": "Peru",
+                                "item-id": 672,
+                                "self-message": "You buff your allies!",
+                                "target-message": "The White Mage buffs you!",
+                                "popup-message": "Buffed!"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Miner",
+            "inventory": "ctgclass9",
+            "ability-cooldown-seconds": 15,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                104
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "GiveItem",
+                            "item-id": 235,
+                            "prefix": 0,
+                            "count": 1
+                        },
+                        {
+                            "$type": "ClearOutTerrain"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Fish",
+            "inventory": "ctgclass10",
+            "ability-cooldown-seconds": 45,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "BuffSelf",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 1,
+                                        "buff-duration": 420
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Clown",
+            "inventory": "ctgclass11",
+            "ability-cooldown-seconds": 22,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                5,
+                33,
+                117
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "SwapRadius",
+                            "heal-self-percentage": 0.5,
+                            "heal-target-percentage": 0.5,
+                            "self-buffer": null,
+                            "target-buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 15,
+                                        "buff-duration": 180
+                                    },
+                                    {
+                                        "buff-id": 1,
+                                        "buff-duration": 180
+                                    }
+                                ]
+                            },
+                            "target-finder": {
+                                "target-types": "enemies",
+                                "radius": 21
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Flame Bunny",
+            "inventory": "ctgclass12",
+            "ability-cooldown-seconds": 30,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                33,
+                116
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "BuffSelf",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 173,
+                                        "buff-duration": 300
+                                    },
+                                    {
+                                        "buff-id": 24,
+                                        "buff-duration": 150
+                                    },
+                                    {
+                                        "buff-id": 44,
+                                        "buff-duration": 150
+                                    },
+                                    {
+                                        "buff-id": 39,
+                                        "buff-duration": 150
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Tiki",
+            "inventory": "ctgclass13",
+            "ability-cooldown-seconds": 50,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "SummonShrine"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Tree",
+            "inventory": "ctgclass14",
+            "ability-cooldown-seconds": 40,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                7,
+                29
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "SummonTree"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Mutant",
+            "inventory": "ctgclass15",
+            "ability-cooldown-seconds": 1,
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "buffs": [
+                36,
+                146,
+                195,
+                196
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "MutantSwitch",
+                            "items": {
+                                "Rusher": {
+                                    "max-hp": 100,
+                                    "current-hp-multiplier": 0.5,
+                                    "weapon": {
+                                        "item-id": 220,
+                                        "prefix-id": 15
+                                    },
+                                    "accessories": [
+                                        {
+                                            "item-id": 1163
+                                        },
+                                        {
+                                            "item-id": 3097
+                                        },
+                                        {
+                                            "item-id": 212,
+                                            "prefix-id": 78
+                                        },
+                                        {
+                                            "item-id": 285,
+                                            "prefix-id": 80
+                                        }
+                                    ],
+                                    "vanity": [
+                                        {
+                                            "item-id": 4652
+                                        },
+                                        {
+                                            "item-id": 5046
+                                        },
+                                        {
+                                            "item-id": 3735
+                                        },
+                                        {
+                                            "item-id": 3581
+                                        },
+                                        {
+                                            "item-id": 4563
+                                        }
+                                    ]
+                                },
+                                "Regen": {
+                                    "max-hp": 200,
+                                    "current-hp-multiplier": 2.0,
+                                    "weapon": {
+                                        "item-id": 3836,
+                                        "prefix-id": 23
+                                    },
+                                    "helmet": {
+                                        "item-id": 1207,
+                                        "prefix-id": 72
+                                    },
+                                    "shirt": {
+                                        "item-id": 1208,
+                                        "prefix-id": 72
+                                    },
+                                    "pants": {
+                                        "item-id": 1209,
+                                        "prefix-id": 72
+                                    },
+                                    "accessories": [
+                                        {
+                                            "item-id": 1253,
+                                            "prefix-id": 72
+                                        },
+                                        {
+                                            "item-id": 49
+                                        },
+                                        {
+                                            "item-id": 860
+                                        },
+                                        {
+                                            "item-id": 490
+                                        }
+                                    ],
+                                    "vanity": [
+                                        {
+                                            "item-id": 1907
+                                        },
+                                        {
+                                            "item-id": 5049
+                                        },
+                                        {
+                                            "item-id": 5079
+                                        }
+                                    ]
+                                }
+                            },
+                            "debuff-duration-milliseconds": 1800
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

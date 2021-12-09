@@ -1,0 +1,205 @@
+{
+    "points-for-winning": 16,
+    "points-for-losing": 4,
+    "points-for-drawing": 8,
+    "inventory-format": "ctgclass#",
+    "class-buffs": {
+      "Archer": [
+        36
+      ],
+      "Ninja": [
+        158,
+        6
+      ],
+      "Beast": [],
+      "Gladiator": [
+        33
+      ],
+      "Tank": [
+        46
+      ],
+      "JungleMan": [
+        33
+      ],
+      "BlackMage": [
+        6,
+        36
+      ],
+      "Psychic": [
+        33
+      ],
+      "WhiteMage": [
+        158
+      ],
+      "Miner": [
+        104
+      ],
+      "Fish": [],
+      "Clown": [
+        117,
+        5,
+        33
+      ],
+      "FlameBunny": [
+        116,
+        33
+      ],
+      "Tiki": [],
+      "Tree": [
+        29,
+        7
+      ],
+      "Mutant": [
+        196,
+        33,
+        36,
+        146
+      ]
+    },
+    "event-frequency-ticks": 600,
+    "passive-ability-frequency-ticks": 10,
+    "class-ability-cooldowns-seconds": {
+      "Archer": 35,
+      "Ninja": 20,
+      "Beast": 35,
+      "Gladiator": 40,
+      "Tank": 40,
+      "JungleMan": 35,
+      "BlackMage": 30,
+      "Psychic": 30,
+      "WhiteMage": 30,
+      "Miner": 15,
+      "Fish": 45,
+      "Clown": 22,
+      "FlameBunny": 30,
+      "Tiki": 50,
+      "Tree": 40,
+      "Mutant": 1
+    },
+    "archer-ability-duration-milliseconds": 8000,
+    "ninja-ability-duration-frames": 3600,
+    "gladiator-ability-duration-milliseconds": 8000,
+    "tank-ability-duration-frames": 600,
+    "jungle-man-ability-radius-tiles": 15,
+    "jungle-man-ability-duration-milliseconds": 7500,
+    "jungle-man-debuff-duration-frames": 300,
+    "black-mage-ability-duration-frames": 240,
+    "psychic-ability-self-damage": 20,
+    "white-mage-ability-radius-tiles": 25,
+    "white-mage-ability-duration-frames": 480,
+    "white-mage-ironskin-duration-frames": 360,
+    "white-mage-passive-radius-tiles": 4,
+    "white-mage-passive-duration-frames": 30,
+    "fish-ability-duration-frames": 420,
+    "clown-ability-radius-tiles": 21,
+    "clown-ability-duration-frames": 180,
+    "clown-ability-heal-percentage": 0.5,
+    "clown-max-hp": 100,
+    "flame-bunny-ability-duration-milliseconds": 5000,
+    "flame-bunny-ability-radius-tiles": 8,
+    "flame-bunny-nebula-duration-frames": 300,
+    "flame-bunny-buff-duration-frames": 150,
+    "flame-bunny-debuff-duration-frames": 30,
+    "tiki-shrine-attack-radius-tiles": 20,
+    "tiki-shrine-attack-damage": 25,
+    "tiki-shrine-attack-speed-ticks": 18,
+    "tiki-shrine-self-heal-speed-ticks": 4,
+    "tiki-shrine-max-hp": 550,
+    "tiki-ability-cooldown-penalty-seconds": 20,
+    "tiki-heal-radius-tiles": 14,
+    "tiki-heal-speed-ticks": 5,
+    "tree-platform-convert-radius-tiles": 4.5,
+    "mutant-ability-debuff-duration-milliseconds": 1500,
+    "mutant-ability-potion-sickness-duration-frames": 1800,
+    "mutant-items": {
+      "Rusher": {
+        "max-hp": 100,
+        "current-hp-multiplier": 0.5,
+        "weapon": {
+          "item-id": 220,
+          "prefix-id": 17
+        },
+        "accessories": [
+          {
+            "item-id": 1163,
+            "prefix-id": 72
+          },
+          {
+            "item-id": 3097,
+            "prefix-id": 72
+          },
+          {
+            "item-id": 212,
+            "prefix-id": 80
+          },
+          {
+            "item-id": 285,
+            "prefix-id": 80
+          }
+        ],
+        "vanity": [
+          {
+            "item-id": 4652
+          },
+          {
+            "item-id": 5046
+          },
+          {
+            "item-id": 3735
+          },
+          {
+            "item-id": 3581
+          },
+          {
+            "item-id": 4563
+          }
+        ]
+      },
+      "Regen": {
+        "max-hp": 200,
+        "current-hp-multiplier": 2.0,
+        "weapon": {
+          "item-id": 3836,
+          "prefix-id": 23
+        },
+        "helmet": {
+          "item-id": 1207,
+          "prefix-id": 72
+        },
+        "shirt": {
+          "item-id": 1208,
+          "prefix-id": 72
+        },
+        "pants": {
+          "item-id": 1209,
+          "prefix-id": 72
+        },
+        "accessories": [
+          {
+            "item-id": 1253,
+            "prefix-id": 72
+          },
+          {
+            "item-id": 49
+          },
+          {
+            "item-id": 860
+          },
+          {
+            "item-id": 490
+          }
+        ],
+        "vanity": [
+          {
+            "item-id": 1907
+          },
+          {
+            "item-id": 5049
+          },
+          {
+            "item-id": 5079
+          }
+        ]
+      }
+    }
+  }
