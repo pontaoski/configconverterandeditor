@@ -1,0 +1,1250 @@
+{
+    "points-for-winning": 16,
+    "points-for-losing": 4,
+    "points-for-drawing": 8,
+    "points-for-picking-random": 2,
+    "event-frequency-ticks": 600,
+    "tiki-shrine-attack-radius-tiles": 20,
+    "tiki-shrine-attack-damage": 22,
+    "tiki-shrine-attack-speed-ticks": 18,
+    "tiki-shrine-self-heal-speed-ticks": 4,
+    "tiki-shrine-max-hp": 550,
+    "hp-as-mana-cost": 20,
+    "tiki-heal-radius-tiles": 14,
+    "tiki-heal-speed-ticks": 6,
+    "tree-platform-convert-radius-tiles": 4.5,
+    "classes": [
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Archer",
+            "tags": [],
+            "inventory": "ctgclass0",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 247,
+            "buffs": [
+                36
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "TemporaryReforge",
+                            "item-id": 265,
+                            "prefix": 18,
+                            "duration": "00:00:08",
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        },
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 16,
+                                        "buff-duration": 480
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 35,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": "A comedic archer",
+            "description": "This class is very funny.\nFunny Archers can use their whoopee to blow up and kill nearby enemies!\nFunny Archers inflict random debuffs on players they hit.",
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Funny Archer",
+            "tags": [],
+            "inventory": "ctgclass0",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 247,
+            "buffs": [
+                36
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "BellUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Message",
+                            "notifier": {
+                                "color": "LightGreen",
+                                "item-id": 1746,
+                                "target-message": "You light your fuse..."
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        },
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 149,
+                                        "buff-duration": 60
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        },
+                        {
+                            "$type": "Repeat",
+                            "times": 4,
+                            "interval": "00:00:00.2500000",
+                            "action": {
+                                "$type": "RunParallel",
+                                "actions": [
+                                    {
+                                        "$type": "SpawnProjectile",
+                                        "projectile-spawner": {
+                                            "$type": "ProjectileSpawner",
+                                            "projectiles": [
+                                                594
+                                            ]
+                                        },
+                                        "targeter": {
+                                            "$type": "TargetSelf"
+                                        }
+                                    },
+                                    {
+                                        "$type": "Sound",
+                                        "sound-player": {
+                                            "sounds": [
+                                                "DD2_KoboldIgnite"
+                                            ]
+                                        },
+                                        "targeter": {
+                                            "$type": "TargetSelf"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "$type": "Explode",
+                            "notifier": {
+                                "color": "LightGreen",
+                                "item-id": 1746,
+                                "self-message": "... your fuse explodes!",
+                                "target-message": "You are blown up by the Creeper!",
+                                "popup-message": "Blown up!"
+                            },
+                            "targeter": {
+                                "$type": "TargetRadius",
+                                "target-types": "self, enemies",
+                                "radius": 8
+                            }
+                        }
+                    ]
+                },
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "TemporaryEnableStruckPlayer",
+                            "duration": "00:00:08",
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        },
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 16,
+                                        "buff-duration": 480
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "triggers": [
+                        {
+                            "$type": "StruckPlayer"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "RunRandom",
+                            "actions": [
+                                {
+                                    "$type": "Buff",
+                                    "buffer": {
+                                        "buffs": [
+                                            {
+                                                "buff-id": 156,
+                                                "buff-duration": 480
+                                            }
+                                        ]
+                                    },
+                                    "targeter": {
+                                        "$type": "TargetTriggerTarget"
+                                    }
+                                },
+                                {
+                                    "$type": "Buff",
+                                    "buffer": {
+                                        "buffs": [
+                                            {
+                                                "buff-id": 113,
+                                                "buff-duration": 480
+                                            }
+                                        ]
+                                    },
+                                    "targeter": {
+                                        "$type": "TargetTriggerTarget"
+                                    }
+                                },
+                                {
+                                    "$type": "Buff",
+                                    "buffer": {
+                                        "buffs": [
+                                            {
+                                                "buff-id": 5,
+                                                "buff-duration": 480
+                                            }
+                                        ]
+                                    },
+                                    "targeter": {
+                                        "$type": "TargetTriggerTarget"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 35,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Ninja",
+            "tags": [],
+            "inventory": "ctgclass1",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 256,
+            "buffs": [
+                6,
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 10,
+                                        "buff-duration": 3600
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 20,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Beast",
+            "tags": [],
+            "inventory": "ctgclass2",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 3374,
+            "buffs": [],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "EnforceInArena",
+                            "action": {
+                                "$type": "NPC",
+                                "npc-id": 141,
+                                "targeter": {
+                                    "$type": "TargetSelf"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 35,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Gladiator",
+            "tags": [],
+            "inventory": "ctgclass3",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 3187,
+            "buffs": [
+                33,
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "TemporaryItem",
+                            "item-id": 4788,
+                            "prefix": 50,
+                            "duration": "00:00:08",
+                            "is-accessory": false,
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        },
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 3,
+                                        "buff-duration": 480
+                                    },
+                                    {
+                                        "buff-id": 146,
+                                        "buff-duration": 480
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 35,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Tank",
+            "tags": [],
+            "inventory": "ctgclass4",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 91,
+            "buffs": [
+                46,
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 5,
+                                        "buff-duration": 600
+                                    },
+                                    {
+                                        "buff-id": 113,
+                                        "buff-duration": 600
+                                    },
+                                    {
+                                        "buff-id": 114,
+                                        "buff-duration": 600
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 40,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Jungle Man",
+            "tags": [],
+            "inventory": "ctgclass5",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 228,
+            "buffs": [
+                33,
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "TemporaryItem",
+                            "item-id": 3296,
+                            "prefix": 0,
+                            "duration": "00:00:07.5000000",
+                            "is-accessory": true,
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        },
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 163,
+                                        "buff-duration": 300
+                                    },
+                                    {
+                                        "buff-id": 20,
+                                        "buff-duration": 300
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetRadius",
+                                "target-types": "enemies",
+                                "radius": 20
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 35,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Black Mage",
+            "tags": [],
+            "inventory": "ctgclass6",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 2857,
+            "buffs": [
+                6,
+                36
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 7,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 26,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 29,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 6,
+                                        "buff-duration": 240
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 20,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Psychic",
+            "tags": [],
+            "inventory": "ctgclass7",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 3266,
+            "buffs": [
+                33
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "StartUsingHPAsMana"
+                        },
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 178,
+                                        "buff-duration": 24000000
+                                    },
+                                    {
+                                        "buff-id": 22,
+                                        "buff-duration": 24000000
+                                    },
+                                    {
+                                        "buff-id": 196,
+                                        "buff-duration": 24000000
+                                    },
+                                    {
+                                        "buff-id": 7,
+                                        "buff-duration": 24000000
+                                    },
+                                    {
+                                        "buff-id": 32,
+                                        "buff-duration": 24000000
+                                    },
+                                    {
+                                        "buff-id": 26,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 29,
+                                        "buff-duration": 240
+                                    },
+                                    {
+                                        "buff-id": 6,
+                                        "buff-duration": 240
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 30,
+            "only-one-ability-use-before-death": true,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "White Mage",
+            "tags": [],
+            "inventory": "ctgclass8",
+            "health-from-kills": 0,
+            "required-points": 0,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 238,
+            "buffs": [
+                158
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "IntervalElapsed",
+                            "interval": 6
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 46,
+                                        "buff-duration": 120
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetRadius",
+                                "target-types": "enemies",
+                                "radius": 4
+                            }
+                        }
+                    ]
+                },
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Give",
+                            "items": [
+                                {
+                                    "item-id": 58,
+                                    "count": 1
+                                }
+                            ],
+                            "targeter": {
+                                "$type": "TargetRadius",
+                                "target-types": "allies",
+                                "radius": 25
+                            }
+                        },
+                        {
+                            "$type": "Give",
+                            "items": [
+                                {
+                                    "item-id": 184,
+                                    "count": 1
+                                }
+                            ],
+                            "targeter": {
+                                "$type": "TargetRadius",
+                                "target-types": "allies",
+                                "radius": 25
+                            }
+                        },
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 5,
+                                        "buff-duration": 360
+                                    },
+                                    {
+                                        "buff-id": 206,
+                                        "buff-duration": 480
+                                    },
+                                    {
+                                        "buff-id": 2,
+                                        "buff-duration": 480
+                                    },
+                                    {
+                                        "buff-id": 215,
+                                        "buff-duration": 480
+                                    }
+                                ]
+                            },
+                            "notifier": {
+                                "color": "Peru",
+                                "item-id": 672,
+                                "self-message": "You buff your allies!",
+                                "target-message": "The White Mage buffs you!",
+                                "popup-message": "Buffed!"
+                            },
+                            "targeter": {
+                                "$type": "TargetRadius",
+                                "target-types": "allies",
+                                "radius": 25
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 30,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Miner",
+            "tags": [],
+            "inventory": "ctgclass9",
+            "health-from-kills": 0,
+            "required-points": 150,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 88,
+            "buffs": [
+                104
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Give",
+                            "items": [
+                                {
+                                    "item-id": 235,
+                                    "count": 1
+                                }
+                            ],
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        },
+                        {
+                            "$type": "ClearOutTerrain"
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 15,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Fish",
+            "tags": [],
+            "inventory": "ctgclass10",
+            "health-from-kills": 0,
+            "required-points": 300,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 2498,
+            "buffs": [],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 1,
+                                        "buff-duration": 420
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 45,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Clown",
+            "tags": [],
+            "inventory": "ctgclass11",
+            "health-from-kills": 0,
+            "required-points": 500,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 503,
+            "buffs": [
+                5,
+                33,
+                117
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Swap",
+                            "targeter-b": {
+                                "$type": "TargetRadius",
+                                "target-types": "enemies",
+                                "radius": 21
+                            },
+                            "heal-a-percentage": 0.5,
+                            "heal-b-percentage": 0.5,
+                            "a-buffer": null,
+                            "b-buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 15,
+                                        "buff-duration": 180
+                                    },
+                                    {
+                                        "buff-id": 1,
+                                        "buff-duration": 180
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 22,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Flame Bunny",
+            "tags": [],
+            "inventory": "ctgclass12",
+            "health-from-kills": 0,
+            "required-points": 800,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 243,
+            "buffs": [
+                33,
+                116
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "Buff",
+                            "buffer": {
+                                "buffs": [
+                                    {
+                                        "buff-id": 173,
+                                        "buff-duration": 300
+                                    },
+                                    {
+                                        "buff-id": 24,
+                                        "buff-duration": 150
+                                    },
+                                    {
+                                        "buff-id": 44,
+                                        "buff-duration": 150
+                                    },
+                                    {
+                                        "buff-id": 39,
+                                        "buff-duration": 150
+                                    }
+                                ]
+                            },
+                            "targeter": {
+                                "$type": "TargetSelf"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "RunOnIntervalFor",
+                            "interval": "00:00:00.0200000",
+                            "duration": "00:00:05",
+                            "action": {
+                                "$type": "Buff",
+                                "buffer": {
+                                    "buffs": [
+                                        {
+                                            "buff-id": 39,
+                                            "buff-duration": 50
+                                        },
+                                        {
+                                            "buff-id": 24,
+                                            "buff-duration": 50
+                                        }
+                                    ]
+                                },
+                                "targeter": {
+                                    "$type": "TargetRadius",
+                                    "target-types": "enemies",
+                                    "radius": 8
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 30,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Tiki Priest",
+            "tags": [
+                "is-healing-shrine"
+            ],
+            "inventory": "ctgclass13",
+            "health-from-kills": 0,
+            "required-points": 1100,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 1159,
+            "buffs": [],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "SummonShrine"
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 50,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Tree",
+            "tags": [],
+            "inventory": "ctgclass14",
+            "health-from-kills": 0,
+            "required-points": 1400,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 1940,
+            "buffs": [
+                7,
+                29
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "SummonTree"
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 40,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        },
+        {
+            "summary": null,
+            "description": null,
+            "harp-cooldown": null,
+            "bell-cooldown": null,
+            "whistle-cooldown": null,
+            "name": "Mutant",
+            "tags": [
+                "potion-sickness-on-rusher"
+            ],
+            "inventory": "ctgclass15",
+            "health-from-kills": 0,
+            "required-points": 1700,
+            "random-only": false,
+            "staff-only": false,
+            "enable-struck-player": false,
+            "icon": 2105,
+            "buffs": [
+                36,
+                146,
+                195,
+                196
+            ],
+            "abilities": [
+                {
+                    "triggers": [
+                        {
+                            "$type": "ActiveUsed"
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "$type": "MutantSwitch",
+                            "items": {
+                                "Rusher": {
+                                    "max-hp": 100,
+                                    "current-hp-multiplier": 0.5,
+                                    "weapon": {
+                                        "item-id": 220,
+                                        "prefix-id": 15
+                                    },
+                                    "accessories": [
+                                        {
+                                            "item-id": 1163
+                                        },
+                                        {
+                                            "item-id": 3097
+                                        },
+                                        {
+                                            "item-id": 212,
+                                            "prefix-id": 78
+                                        },
+                                        {
+                                            "item-id": 285,
+                                            "prefix-id": 80
+                                        }
+                                    ],
+                                    "vanity": [
+                                        {
+                                            "item-id": 4652
+                                        },
+                                        {
+                                            "item-id": 5046
+                                        },
+                                        {
+                                            "item-id": 3735
+                                        },
+                                        {
+                                            "item-id": 3581
+                                        },
+                                        {
+                                            "item-id": 4563
+                                        }
+                                    ]
+                                },
+                                "Regen": {
+                                    "max-hp": 200,
+                                    "current-hp-multiplier": 2.0,
+                                    "weapon": {
+                                        "item-id": 3836,
+                                        "prefix-id": 23
+                                    },
+                                    "helmet": {
+                                        "item-id": 1207,
+                                        "prefix-id": 72
+                                    },
+                                    "shirt": {
+                                        "item-id": 1208,
+                                        "prefix-id": 72
+                                    },
+                                    "pants": {
+                                        "item-id": 1209,
+                                        "prefix-id": 72
+                                    },
+                                    "accessories": [
+                                        {
+                                            "item-id": 1253,
+                                            "prefix-id": 72
+                                        },
+                                        {
+                                            "item-id": 49
+                                        },
+                                        {
+                                            "item-id": 860
+                                        },
+                                        {
+                                            "item-id": 490
+                                        }
+                                    ],
+                                    "vanity": [
+                                        {
+                                            "item-id": 1907
+                                        },
+                                        {
+                                            "item-id": 5049
+                                        },
+                                        {
+                                            "item-id": 5079
+                                        }
+                                    ]
+                                }
+                            },
+                            "debuff-duration-milliseconds": 1500,
+                            "potion-sickness-duration-frames": 1800
+                        }
+                    ]
+                }
+            ],
+            "ability-cooldown-seconds": 1,
+            "only-one-ability-use-before-death": false,
+            "cooldown-penalty-per-extra-players": 0
+        }
+    ]
+}
