@@ -5,6 +5,7 @@ import Monocle.Compose as Compose
 import Monocle.Lens as Lens exposing (Lens)
 import Monocle.Optional as Optional exposing (Optional)
 
+
 type alias Named t =
     { t | name : String }
 
@@ -81,6 +82,14 @@ type alias ActionBase =
     }
 
 
+defaultBase : ActionBase
+defaultBase =
+    { notifier = Nothing
+    , soundPlayer = Nothing
+    , targeter = TTargetSelf
+    }
+
+
 type alias PlayerBuff =
     { buffID : Int
     , buffDuration : Int
@@ -115,7 +124,7 @@ type alias FancyProjectileSpawner =
 
 
 type ProjectileSpawner
-    = PFancyProjectileSpawner
+    = PFancyProjectileSpawner FancyProjectileSpawner
     | PProjectileSpawner BasicProjectileSpawner
 
 
@@ -208,7 +217,7 @@ type alias SpawnProjectile =
 
 type alias Swap =
     { base : ActionBase
-    , targeterB : ActionBase
+    , targeterB : Targeter
     , healAPercentage : Maybe Float
     , healBPercentage : Maybe Float
     , aBuffer : Maybe PlayerBuffer
@@ -324,6 +333,201 @@ type Action
     | ORunRandom RunRandom
     | ORunSequentially RunSequentially
 
+
+defaultABeginDuel : Action
+defaultABeginDuel =
+    ABeginDuel
+        { deathNotifier = Nothing
+        , deathSoundPlayer = Nothing
+        , deathProjectileSpawner = Nothing
+        , winnerBuffer = Nothing
+        }
+
+
+defaultABuff : Action
+defaultABuff =
+    ABuff
+        { base = defaultBase
+        , buffer = PlayerBuffer []
+        }
+
+
+defaultAExplode : Action
+defaultAExplode =
+    AExplode
+        { base = defaultBase
+        }
+
+
+defaultAGive : Action
+defaultAGive =
+    AGive
+        { base = defaultBase
+        , items = []
+        }
+
+
+defaultAGiveFromBag : Action
+defaultAGiveFromBag =
+    AGiveFromBag
+        { base = defaultBase
+        , bag = EndlessBag [] Shuffle
+        }
+
+
+defaultAHeal : Action
+defaultAHeal =
+    AHeal
+        { base = defaultBase
+        , health = 0
+        }
+
+
+defaultAHurt : Action
+defaultAHurt =
+    AHurt
+        { base = defaultBase
+        , damage = 0
+        }
+
+
+defaultAMessage : Action
+defaultAMessage =
+    AMessage
+        { base = defaultBase
+        }
+
+defaultANPC : Action
+defaultANPC =
+    ANPC
+        { base = defaultBase
+        , npcID = 0
+        }
+
+
+defaultARemoveShotProjectile : Action
+defaultARemoveShotProjectile =
+    ARemoveShotProjectile
+        {
+        }
+
+defaultASound : Action
+defaultASound =
+    ASound
+        { base = defaultBase
+        }
+
+defaultASpawnProjectile : Action
+defaultASpawnProjectile =
+    ASpawnProjectile
+        { base = defaultBase
+        , projectileSpawner = PProjectileSpawner (BasicProjectileSpawner [] 0)
+        }
+
+defaultASwap : Action
+defaultASwap =
+    ASwap
+        { base = defaultBase
+        , targeterB = TTargetSelf
+        , healAPercentage = Nothing
+        , healBPercentage = Nothing
+        , aBuffer = Nothing
+        , bBuffer = Nothing
+        }
+
+defaultASwapOnHitWithProjectile : Action
+defaultASwapOnHitWithProjectile =
+    ASwapOnHitWithProjectile
+        { projectileID = 0
+        }
+
+defaultATemporaryEnableStruckPlayer : Action
+defaultATemporaryEnableStruckPlayer =
+    ATemporaryEnableStruckPlayer
+        { base = defaultBase
+        , duration = "00:00"
+        }
+
+defaultATemporaryItem : Action
+defaultATemporaryItem =
+    ATemporaryItem
+        { base = defaultBase
+        , itemID = 0
+        , prefix = 0
+        , duration = "00:00"
+        , isAccessory = False
+        }
+
+defaultATemporaryReforge : Action
+defaultATemporaryReforge =
+    ATemporaryReforge
+        { base = defaultBase
+        , duration = "00:00"
+        , itemID = 0
+        , prefix = 0
+        }
+
+defaultOPause : Action
+defaultOPause =
+    OPause
+        { duration = "00:00"
+        }
+
+
+defaultORepeat : Action
+defaultORepeat =
+    ORepeat
+        { times = 0
+        , interval = "00:00"
+        , action = defaultABeginDuel
+        }
+
+
+defaultORunAfter : Action
+defaultORunAfter =
+    ORunAfter
+        { duration = 0
+        , action = defaultABeginDuel
+        }
+
+
+defaultORunAtMost : Action
+defaultORunAtMost =
+    ORunAtMost
+        { maximumTimesRan = 0
+        , action = defaultABeginDuel
+        }
+
+
+defaultORunOnIntervalFor : Action
+defaultORunOnIntervalFor =
+    ORunOnIntervalFor
+        { interval = "00:00"
+        , duration = "00:00"
+        , action = defaultABeginDuel
+        }
+
+
+defaultORunParallel : Action
+defaultORunParallel =
+    ORunParallel
+        { actions = []
+        }
+
+
+defaultORunRandom : Action
+defaultORunRandom =
+    ORunRandom
+        { actions = []
+        }
+
+
+defaultORunSequentially : Action
+defaultORunSequentially =
+    ORunSequentially
+        { actions = []
+        }
+
 baseLens : Optional Action ActionBase
 baseLens =
     { getOption =
@@ -331,52 +535,76 @@ baseLens =
             case action of
                 ABeginDuel _ ->
                     Nothing
+
                 ABuff ability ->
                     Just ability.base
+
                 AExplode ability ->
                     Just ability.base
+
                 AGive ability ->
                     Just ability.base
+
                 AGiveFromBag ability ->
                     Just ability.base
+
                 AHeal ability ->
                     Just ability.base
+
                 AHurt ability ->
                     Just ability.base
+
                 AMessage ability ->
                     Just ability.base
+
                 ANPC ability ->
                     Just ability.base
+
                 ARemoveShotProjectile _ ->
                     Nothing
+
                 ASound ability ->
                     Just ability.base
+
                 ASpawnProjectile ability ->
                     Just ability.base
+
                 ASwap ability ->
                     Just ability.base
+
                 ASwapOnHitWithProjectile _ ->
                     Nothing
+
                 ATemporaryEnableStruckPlayer ability ->
                     Just ability.base
+
                 ATemporaryItem ability ->
                     Just ability.base
+
                 ATemporaryReforge ability ->
                     Just ability.base
+
                 OPause _ ->
                     Nothing
+
                 ORepeat _ ->
                     Nothing
+
                 ORunAfter _ ->
                     Nothing
+
                 ORunAtMost _ ->
                     Nothing
+
                 ORunOnIntervalFor _ ->
                     Nothing
+
                 ORunParallel _ ->
                     Nothing
+
                 ORunRandom _ ->
                     Nothing
+
                 ORunSequentially _ ->
                     Nothing
     , set =
@@ -384,55 +612,80 @@ baseLens =
             case action of
                 ABeginDuel _ ->
                     action
+
                 ABuff ability ->
                     ABuff { ability | base = base }
+
                 AExplode ability ->
                     AExplode { ability | base = base }
+
                 AGive ability ->
                     AGive { ability | base = base }
+
                 AGiveFromBag ability ->
                     AGiveFromBag { ability | base = base }
+
                 AHeal ability ->
                     AHeal { ability | base = base }
+
                 AHurt ability ->
                     AHurt { ability | base = base }
+
                 AMessage ability ->
                     AMessage { ability | base = base }
+
                 ANPC ability ->
                     ANPC { ability | base = base }
+
                 ARemoveShotProjectile _ ->
                     action
+
                 ASound ability ->
                     ASound { ability | base = base }
+
                 ASpawnProjectile ability ->
                     ASpawnProjectile { ability | base = base }
+
                 ASwap ability ->
                     ASwap { ability | base = base }
+
                 ASwapOnHitWithProjectile _ ->
                     action
+
                 ATemporaryEnableStruckPlayer ability ->
                     ATemporaryEnableStruckPlayer { ability | base = base }
+
                 ATemporaryItem ability ->
                     ATemporaryItem { ability | base = base }
+
                 ATemporaryReforge ability ->
                     ATemporaryReforge { ability | base = base }
+
                 OPause _ ->
                     action
+
                 ORepeat _ ->
                     action
+
                 ORunAfter _ ->
                     action
+
                 ORunAtMost _ ->
                     action
+
                 ORunOnIntervalFor _ ->
                     action
+
                 ORunParallel _ ->
                     action
+
                 ORunRandom _ ->
                     action
+
                 ORunSequentially _ ->
                     action
     }
+
 
 type alias ClassAbility =
     { triggers : List AbilityTrigger

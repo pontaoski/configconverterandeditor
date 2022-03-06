@@ -4,6 +4,7 @@ import Classes
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
+import Element.Events exposing (onClick)
 import Element.Font as Font
 import Element.Input as Input
 import File exposing (File)
@@ -22,7 +23,12 @@ import View exposing (View)
 
 
 ugly =
-    [ padding 16, Border.color <| rgb255 0 0 0, Border.width 2, spacing 16 ]
+    [ padding 16
+    , Border.color <| rgb255 0 0 0
+    , Border.width 2
+    , spacing 16
+    , Background.color <| rgb255 255 255 255
+    ]
 
 
 uglyButton =
@@ -88,6 +94,7 @@ page shared req =
 
 type alias Model =
     { config : List Classes.ClassConfig
+    , action : Maybe (Classes.Action -> List Classes.ClassConfig)
     }
 
 
@@ -123,6 +130,7 @@ init =
           , description = ""
           }
         ]
+        Nothing
     , Cmd.none
     )
 
@@ -133,6 +141,8 @@ init =
 
 type Msg
     = UpdateClassList (List Classes.ClassConfig)
+    | OpenNewActionDialog (Classes.Action -> List Classes.ClassConfig)
+    | CloseNewActionDialog (Maybe (List Classes.ClassConfig))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -140,6 +150,15 @@ update msg model =
     case msg of
         UpdateClassList newList ->
             ( { model | config = newList }, Cmd.none )
+
+        OpenNewActionDialog k ->
+            ( { model | action = Just k }, Cmd.none )
+
+        CloseNewActionDialog (Just newClasses) ->
+            ( { model | action = Nothing, config = newClasses }, Cmd.none )
+
+        CloseNewActionDialog Nothing ->
+            ( { model | action = Nothing }, Cmd.none )
 
 
 
@@ -155,9 +174,21 @@ subscriptions model =
 -- VIEW
 
 
+viewInFront : Model -> List (Attribute Msg)
+viewInFront model =
+    case model.action of
+        Just k ->
+            [ inFront (newActionDialog k) ]
+
+        Nothing ->
+            []
+
+
 vview : Model -> View Msg
 vview model =
-    View "Convertidor" <| view model
+    View "Convertidor"
+        (viewInFront model)
+        (view model)
 
 
 type alias Viewer ofType =
@@ -193,14 +224,25 @@ viewTargeter classes optional item =
         ]
 
 
-viewNotifier : Viewer Classes.Notifier
-viewNotifier classes optional item =
-    Debug.todo "a"
+defaultBlank : Maybe String -> String
+defaultBlank str =
+    Maybe.withDefault "" str
 
 
-viewSoundPlayer : Viewer Classes.SoundPlayer
-viewSoundPlayer classes optional item =
-    Debug.todo "a"
+doMaybeInt str =
+    if str == "" then
+        Nothing
+
+    else
+        String.toInt str
+
+
+doMaybeStr str =
+    if str == "" then
+        Nothing
+
+    else
+        Just str
 
 
 viewOptionalNotifier : Viewer (Maybe Classes.Notifier)
@@ -214,8 +256,43 @@ viewOptionalNotifier classes optional item =
 
         Just it ->
             column []
-                [ text "Notifier"
-                , column ugly []
+                [ row [ width fill ]
+                    [ el [ width fill ] (text "Notifier")
+                    , Input.button uglyButton
+                        { onPress = Just (UpdateClassList (optional.set Nothing classes))
+                        , label = text "Remove"
+                        }
+                    ]
+                , Input.text ugly
+                    { onChange = \x -> UpdateClassList (optional.set (Just { it | color = x }) classes)
+                    , text = it.color
+                    , placeholder = Nothing
+                    , label = Input.labelAbove [] (text "Colour")
+                    }
+                , Input.text ugly
+                    { onChange = \x -> UpdateClassList (optional.set (Just { it | itemID = doMaybeInt x }) classes)
+                    , text = it.itemID |> Maybe.map String.fromInt |> defaultBlank
+                    , placeholder = Nothing
+                    , label = Input.labelAbove [] (text "Item ID")
+                    }
+                , Input.text ugly
+                    { onChange = \x -> UpdateClassList (optional.set (Just { it | selfMessage = doMaybeStr x }) classes)
+                    , text = it.selfMessage |> defaultBlank
+                    , placeholder = Nothing
+                    , label = Input.labelAbove [] (text "Message to send to self")
+                    }
+                , Input.text ugly
+                    { onChange = \x -> UpdateClassList (optional.set (Just { it | targetMessage = doMaybeStr x }) classes)
+                    , text = it.targetMessage |> defaultBlank
+                    , placeholder = Nothing
+                    , label = Input.labelAbove [] (text "Message to send to targets")
+                    }
+                , Input.text ugly
+                    { onChange = \x -> UpdateClassList (optional.set (Just { it | popupMessage = doMaybeStr x }) classes)
+                    , text = it.popupMessage |> defaultBlank
+                    , placeholder = Nothing
+                    , label = Input.labelAbove [] (text "Message to popup on targets")
+                    }
                 ]
 
 
@@ -224,21 +301,171 @@ viewOptionalSoundPlayer classes optional item =
     case item of
         Nothing ->
             Input.button uglyButton
-                { onPress = Nothing
+                { onPress = Just (UpdateClassList <| optional.set (Just (Classes.SoundPlayer [])) classes)
                 , label = text "Add Sound Player"
                 }
 
         Just it ->
-            Debug.todo "a"
+            column [ width fill ]
+                [ row [ width fill ]
+                    [ el [ width fill ] (text "Sound Player")
+                    , Input.button uglyButton
+                        { onPress = Just (UpdateClassList (optional.set Nothing classes))
+                        , label = text "Remove"
+                        }
+                    ]
+                , column ugly
+                    (List.indexedMap
+                        (\idx snd ->
+                            row [ width fill ]
+                                [ Input.text ugly
+                                    { onChange =
+                                        \x ->
+                                            UpdateClassList (optional.set (Just { it | sounds = List.Extra.setAt idx x it.sounds }) classes)
+                                    , text = snd
+                                    , placeholder = Nothing
+                                    , label = Input.labelHidden "Sound ID"
+                                    }
+                                , Input.button uglyButton
+                                    { onPress = Just (UpdateClassList (optional.set (Just { it | sounds = List.Extra.removeAt idx it.sounds }) classes))
+                                    , label = text "Remove"
+                                    }
+                                ]
+                        )
+                        it.sounds
+                    )
+                , Input.button uglyButton
+                    { onPress = Just (UpdateClassList (optional.set (Just { it | sounds = it.sounds ++ [ "" ] }) classes))
+                    , label = text "New Sound"
+                    }
+                ]
 
 
 viewActionBase : Viewer Classes.ActionBase
 viewActionBase classes optional item =
-    row []
+    column []
         [ viewOptionalNotifier classes (optional |> Compose.optionalWithLens notifier) item.notifier
         , viewOptionalSoundPlayer classes (optional |> Compose.optionalWithLens soundPlayer) item.soundPlayer
         , viewTargeter classes (optional |> Compose.optionalWithLens targeter) item.targeter
         ]
+
+
+newActionDialog : (Classes.Action -> List Classes.ClassConfig) -> Element Msg
+newActionDialog mapper =
+    let
+        make closeWith =
+            Just (CloseNewActionDialog (Just (mapper closeWith)))
+    in
+    el
+        [ width fill
+        , height fill
+        , Background.color <| rgba255 0 0 0 0.5
+        , onClick (CloseNewActionDialog Nothing)
+        ]
+        (column (ugly ++ [ centerX, centerY ])
+            [ text "New Action"
+            , Input.button uglyButton
+                { onPress = make Classes.defaultABeginDuel
+                , label = text "BeginDuel"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultABuff
+                , label = text "Buff"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultAExplode
+                , label = text "Explode"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultAGive
+                , label = text "Give"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultAGiveFromBag
+                , label = text "GiveFromBag"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultAHeal
+                , label = text "Heal"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultAHurt
+                , label = text "Hurt"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultAMessage
+                , label = text "Message"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultANPC
+                , label = text "NPC"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultARemoveShotProjectile
+                , label = text "RemoveShotProjectile"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultASound
+                , label = text "Sound"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultASpawnProjectile
+                , label = text "SpawnProjectile"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultASwap
+                , label = text "Swap"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultASwapOnHitWithProjectile
+                , label = text "SwapOnHitWithProjectile"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultATemporaryEnableStruckPlayer
+                , label = text "TemporaryEnableStruckPlayer"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultATemporaryItem
+                , label = text "TemporaryItem"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultATemporaryReforge
+                , label = text "TemporaryReforge"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultOPause
+                , label = text "Pause"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultORepeat
+                , label = text "Repeat"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultORunAfter
+                , label = text "RunAfter"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultORunAtMost
+                , label = text "RunAtMost"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultORunOnIntervalFor
+                , label = text "RunOnIntervalFor"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultORunParallel
+                , label = text "RunParallel"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultORunRandom
+                , label = text "RunRandom"
+                }
+            , Input.button uglyButton
+                { onPress = make Classes.defaultORunSequentially
+                , label = text "RunSequentially"
+                }
+            ]
+        )
 
 
 viewAction : Viewer Classes.Action
@@ -263,14 +490,23 @@ viewAction classes optional item =
         Classes.AGiveFromBag action ->
             Debug.todo "a"
 
-        Classes.AHeal action ->
-            Debug.todo "a"
+        Classes.AHeal ({ base, health } as action) ->
+            column ugly
+                [ text "Heal Target"
+                , Input.text ugly
+                    { onChange = \msg -> UpdateClassList (optional.set (Classes.AHeal { action | health = String.toInt msg |> Maybe.withDefault 0 }) classes)
+                    , text = String.fromInt health
+                    , placeholder = Nothing
+                    , label = Input.labelAbove [] (text "Health")
+                    }
+                , viewActionBase classes baseLens base
+                ]
 
-        Classes.AHurt { base, damage } ->
+        Classes.AHurt ({ base, damage } as action) ->
             column ugly
                 [ text "Hurt Target"
                 , Input.text ugly
-                    { onChange = \msg -> Debug.todo "a"
+                    { onChange = \msg -> UpdateClassList (optional.set (Classes.AHurt { action | damage = String.toInt msg |> Maybe.withDefault 0 }) classes)
                     , text = String.fromInt damage
                     , placeholder = Nothing
                     , label = Input.labelAbove [] (text "Damage")
@@ -355,24 +591,6 @@ viewTrigger classes optional item =
             }
 
 
-
--- case item of
---     Classes.PlayerHurt ->
---         Debug.todo "a"
---     Classes.PlayerHurtPvP ->
---         Debug.todo "a"
---     Classes.PlayerKilled ->
---         Debug.todo "a"
---     Classes.PlayerKilledPvP ->
---         Debug.todo "a"
---     Classes.ActiveUsed ->
---         Debug.todo "a"
---     Classes.ProjectileShot { interval } ->
---         Debug.todo "a"
---     Classes.IntervalElapsed { interval } ->
---         Debug.todo "a"
-
-
 mapNestedViewer : a -> Optional c b -> (a -> Optional c d -> e -> f) -> List e -> Lens b (List d) -> List f
 mapNestedViewer classes optional viewer list lens =
     List.indexedMap
@@ -385,8 +603,19 @@ mapNestedViewer classes optional viewer list lens =
 viewAbility : Viewer Classes.ClassAbility
 viewAbility classes optional item =
     column ugly
-        (text "Actions"
-            :: mapNestedViewer classes optional viewAction item.actions actions
+        ([ text "Actions"
+         , Input.button uglyButton
+            { onPress =
+                let
+                    act : Classes.Action -> List Classes.ClassConfig
+                    act newAction =
+                        optional.set { item | actions = item.actions ++ [ newAction ] } classes
+                in
+                Just <| OpenNewActionDialog act
+            , label = text "New Action"
+            }
+         ]
+            ++ mapNestedViewer classes optional viewAction item.actions actions
             ++ text "Triggers"
             :: mapNestedViewer classes optional viewTrigger item.triggers triggers
         )
